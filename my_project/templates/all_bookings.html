@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Bookings</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-color: #f5f7fa;
+            font-size: 16px;
+            color: #343a40;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #343a40;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            color: #343a40;
+            text-align: center;
+        }
+
+        table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        td {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover td {
+            background-color: #e2e6ea;
+            /* Highlight on row hover */
+        }
+
+        a.btn-link {
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="/home">Room Booking</a>
+    </nav>
+
+    <div class="container mt-5">
+        <a href="/home" class="btn btn-link">Back to Home</a>
+        <h2>All Bookings</h2>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Room ID</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking[0] }}</td> <!-- User ID -->
+                    <td>{{ booking[1] }}</td> <!-- Room ID -->
+                    <td>{{ booking[2] }}</td> <!-- Date -->
+                    <td>{{ booking[3] }}</td> <!-- Start Time -->
+                    <td>{{ booking[4] }}</td> <!-- End Time -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

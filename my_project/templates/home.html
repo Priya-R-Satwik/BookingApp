@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking System</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            padding: 15px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            padding: 10px 15px;
+        }
+
+        .nav-link:hover {
+            color: #007bff !important;
+        }
+
+        /* Room Gallery */
+        .room-item {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .room-item:hover {
+            transform: scale(1.05);
+        }
+
+        .room-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s;
+        }
+
+        .room-item:hover .room-overlay {
+            opacity: 1;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: #f8f9fa;
+            padding: 50px 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+        <a class="navbar-brand" href="/">Hotel Booking System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/book">Book a Room</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+                {% if logged_in %}
+                <li class="nav-item">
+                    <span class="nav-link">Welcome {{ username }}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Slideshow -->
+    <div id="heroCarousel" class="carousel slide hero" data-ride="carousel" data-interval="4000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ url_for('static', filename='images/hotel-hero1.jpg') }}" class="d-block w-100"
+                    alt="Hotel Hero 1">
+                <div class="overlay"></div>
+                <div class="hero-content">
+                    <h1>Welcome to Our Hotel</h1>
+                    <p>Your comfort is our priority</p>
+                    <a href="/book" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='images/hotel-hero2.jpg') }}" class="d-block w-100"
+                    alt="Hotel Hero 2">
+                <div class="overlay"></div>
+                <div class="hero-content">
+                    <h1>Luxurious Stay Awaits</h1>
+                    <p>Experience the best hospitality</p>
+                    <a href="/book" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='images/hotel-hero3.jpg') }}" class="d-block w-100"
+                    alt="Hotel Hero 3">
+                <div class="overlay"></div>
+                <div class="hero-content">
+                    <h1>Relax and Unwind</h1>
+                    <p>Enjoy your stay with us</p>
+                    <a href="/book" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{ url_for('static', filename='images/hotel-hero4.jpg') }}" class="d-block w-100" alt="Hotel Hero 3">
+                <div class="overlay"></div>
+                <div class="hero-content">
+                    <h1>Relax and Unwind</h1>
+                    <p>Enjoy your stay with us</p>
+                    <a href="/book" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <!-- Room Gallery -->
+    <section class="room-gallery">
+        <div class="container">
+            <h2 class="text-center">Explore Our Rooms</h2>
+            <div class="row">
+                <div class="col-md-4 room-item">
+                    <img src="{{ url_for('static', filename='images/room1.jpg') }}" class="img-fluid" alt="Room 1">
+                    <h5>Deluxe Room</h5>
+                    <p>Experience luxury with a breathtaking view.</p>
+                    <a href="/book" class="btn btn-secondary">Book Now</a>
+                </div>
+                <div class="col-md-4 room-item">
+                    <img src="{{ url_for('static', filename='images/room2.jpg') }}" class="img-fluid" alt="Room 2">
+                    <h5>Standard Room</h5>
+                    <p>Cozy and comfortable for your stay.</p>
+                    <a href="/book" class="btn btn-secondary">Book Now</a>
+                </div>
+                <div class="col-md-4 room-item">
+                    <img src="{{ url_for('static', filename='images/room3.jpg') }}" class="img-fluid" alt="Room 3">
+                    <h5>Suite</h5>
+                    <p>Luxury with extra space and amenities.</p>
+                    <a href="/book" class="btn btn-secondary">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-4">
+        <p>Contact Us: (123) 456-7890 | email@example.com</p>
+        <p>Follow us on:
+            <a href="#">Facebook</a> | <a href="#">Instagram</a>
+        </p>
+        <p>
+            <a href="/terms">Terms & Conditions</a> |
+            <a href="/privacy">Privacy Policy</a> |
+            <a href="/faq">FAQs</a>
+        </p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <a href="/home" class="btn btn-link">Back to Home</a>
+    <style>
+        .booking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .delete-icon {
+            color: red;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .delete-icon:hover {
+            color: darkred;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">My Bookings</h2>
+
+        <div id="bookingList">
+            {% for booking in bookings %}
+            <div class="booking-item">
+                <div>
+                    <strong>Room {{ booking[0] }}</strong><br>
+                    Date: {{ booking[1] }} <br>
+                    Time: {{ booking[2] }} - {{ booking[3] }}
+                </div>
+                <div>
+                    <!-- Delete button with icon -->
+                    <form method="POST" action="/delete_booking" class="d-inline">
+                        <input type="hidden" name="room_id" value="{{ booking[0] }}">
+                        <input type="hidden" name="date_id" value="{{ booking[1] }}">
+                        <button type="submit" class="delete-icon"
+                            onclick="return confirm('Are you sure you want to delete this booking?')">
+                            &#10060; <!-- Cross icon -->
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <a href="/book" class="btn btn-primary btn-block mt-4">Book Another Room</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking</title>
+    <style>
+        .booked {
+            background-color: lightgray;
+            pointer-events: none;
+            /* Disable interaction */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Select a Date to Book a Room</h1>
+    <form id="dateForm">
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" name="date" required />
+        <button type="button" onclick="fetchAvailableRooms()">Show Available Rooms</button>
+    </form>
+
+    <div id="roomSelection" style="display: none;">
+        <h2>Available Rooms:</h2>
+        <form method="POST" action="/book">
+            <select id="room" name="room" required>
+                <option value="">Select a room</option>
+                <!-- Options will be populated here -->
+            </select>
+            <input type="hidden" id="selectedDate" name="date" />
+            <button type="submit">Book Room</button>
+        </form>
+    </div>
+
+    <script>
+        function fetchAvailableRooms() {
+            const selectedDate = document.getElementById('date').value;
+            if (!selectedDate) {
+                alert("Please select a date.");
+                return;
+            }
+
+            fetch(`/available_rooms?date=${selectedDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    const roomSelect = document.getElementById('room');
+                    roomSelect.innerHTML = '<option value="">Select a room</option>'; // Clear existing options
+
+                    // Populate available rooms
+                    data.available_rooms.forEach(room => {
+                        const option = document.createElement('option');
+                        option.value = room;
+                        option.textContent = room;
+                        roomSelect.appendChild(option);
+                    });
+
+                    // Store selected date in hidden input
+                    document.getElementById('selectedDate').value = selectedDate;
+
+                    document.getElementById('roomSelection').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching available rooms:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>

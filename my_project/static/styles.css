@@ -1,0 +1,12 @@
+.booked-room {
+    color: gray;
+    background-color: #f0f0f0;
+    pointer-events: none;
+    text-decoration: line-through;
+}
+
+.booked-date {
+    background-color: #f8d7da;
+    color: red;
+    cursor: not-allowed;
+}
