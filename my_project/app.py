@@ -215,6 +215,19 @@ def book():
 
     return render_template('book.html', rooms=available_rooms, today=today, username=username)
 
+@app.route('/terms')
+def terms():
+    return render_template('terms.html', logged_in=session.get('logged_in'), username=session.get('username'))
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html', logged_in=session.get('logged_in'), username=session.get('username'))
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html', logged_in=session.get('logged_in'), username=session.get('username'))
+
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=8080)

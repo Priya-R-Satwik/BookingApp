@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .faq-box {
+            border-radius: 10px;
+            /* Rounded edges */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            /* Shadow effect */
+            padding: 20px;
+            /* Inner padding */
+            background-color: #fff;
+            /* Background color */
+            margin-top: 20px;
+            /* Space above the box */
+        }
+        /* Navbar styles */
+        .navbar {
+            padding: 15px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            padding: 10px 15px;
+        }
+
+        .nav-link:hover {
+            color: #007bff !important;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/home">Hotel Booking System</a>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/book">Book a Room</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+                {% if logged_in %}
+                <li class="nav-item">
+                    <span class="nav-link">Welcome {{ username }}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Frequently Asked Questions (FAQs)</h2>
+        <div class="faq-box">
+            <h5>1. How do I make a booking?</h5>
+            <p>You can make a booking by selecting your desired date and available room.</p>
+
+            <h5>2. What is the cancellation policy?</h5>
+            <p>Cancellations must be made at least 24 hours in advance.</p>
+
+            <h5>3. Can I change my booking?</h5>
+            <p>Yes, changes can be made by contacting our support team.</p>
+
+            <h5>4. What payment methods are accepted?</h5>
+            <p>We accept credit/debit cards and other specified payment methods.</p>
+
+            <h5>5. How can I contact customer support?</h5>
+            <p>You can reach out via the contact form on our website or email us directly.</p>
+        </div>
+        <a href="/home" class="btn btn-link">Back to Home</a>
+    </div>
+
+</body>
+
+</html>
