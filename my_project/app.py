@@ -227,6 +227,9 @@ def privacy():
 def faq():
     return render_template('faq.html', logged_in=session.get('logged_in'), username=session.get('username'))
 
+@app.route('/')
+def index():
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     init_db()
